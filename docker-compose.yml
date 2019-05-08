@@ -1,11 +1,11 @@
 version: "3"
 services:
-  guanwang:
+  ssr-share:
     # replace username/repo:tag with your name and image details
-    image: justcy/go-ssrshare:latest
+    image: justcy/ssr-subscription:latest
     restart: always
-    networks:
-    - code-network
+    ports:
+      - 8922:8922
 networks:
-  code-network:
+  default:
     driver: bridge
