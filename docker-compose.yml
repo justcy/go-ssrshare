@@ -6,3 +6,8 @@ services:
     restart: always
     ports:
       - 8922:8922
+    networks:
+      - code-network
+networks:
+  code-network:
+    driver: bridge
