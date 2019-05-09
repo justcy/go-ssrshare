@@ -14,14 +14,14 @@ ssr客户端配置 subscribe feed 填写 本项目地址，例如： http://ssr.
 |源地址|生成subscribe地址|
 |https://github.com/dxxzst/Free-SS-SSR|http://ssr.kanter.cn/dxxzst|
 
-##感谢
+## 感谢
 dxxzst@gmail.com
 
-##其他地址
+## 其他地址
 
 持续更新中
 
-##Donate
+## Donate
 
 若觉得本项目对您有所帮助，欢迎start
 如果项目对你有帮助,你可以选择给我一些鼓励:)
