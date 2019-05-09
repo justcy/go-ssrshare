@@ -6,6 +6,3 @@ services:
     restart: always
     ports:
       - 8922:8922
-networks:
-  default:
-    driver: bridge

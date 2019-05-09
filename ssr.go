@@ -29,19 +29,20 @@ func ssr(w http.ResponseWriter, r *http.Request){
 }
 
 func dxxzst(w http.ResponseWriter, r *http.Request){
-	str := httpGet("https://github.com/dxxzst/Free-SS-SSR")
-	reg := httpRegex(str)
+	str,err := httpGet("https://github.com/dxxzst/Free-SS-SSR")
+	if err != nil{
+		fmt.Sprint(w,err)
+	}
+	reg,err:= httpRegex(str)
 	result := strings.Join(reg, "\n")
 	strbytes := []byte(result)
 	fmt.Fprintf(w, base64.StdEncoding.EncodeToString(strbytes))
 }
 
-func httpGet(url string) string{
+func httpGet(url string) (str string ,err error){
 	resp,err := http.Get(url)
 	if err != nil {
-		fmt.Println(err)
-
-		return ""
+		return "",err
 	}
 
 	defer resp.Body.Close()
@@ -51,11 +52,11 @@ func httpGet(url string) string{
 	if err != nil {
 
 		fmt.Println(err)
-		return ""
+		return "",err
 	}
-	return string(body)
+	return string(body),err
 }
-func httpRegex(str string) []string {
+func httpRegex(str string) (results []string ,err error) {
 	//正则表达式，有点菜，只会(.*?)
 	regex := "<td align=\"left\">ssr:(.*?)</td>"
 
@@ -63,10 +64,12 @@ func httpRegex(str string) []string {
 
 	dataS := reg.FindAllSubmatch([]byte(str), -1)
 
-	results := make([]string,0)
+	results = make([]string,0)
 
-	for _,v := range dataS {
-		results = append(results,string("ssr:"+string(v[1])))
+	if dataS != nil{
+		for _,v := range dataS {
+			results = append(results,string("ssr:"+string(v[1])))
+		}
 	}
-	return results
+	return results,err
 }
