@@ -17,7 +17,7 @@ ssr客户端配置 subscribe feed 填写 本项目地址，例如： http://ssr.
 ## Docker
 如果你喜欢docker，我们也提供了docker镜像
 ```aidl
-# docker push justcy/ssr-subscription:latest
+# docker pull justcy/ssr-subscription:latest
 # docker run -d -p 8922:8922 --net bridge justcy/ssr-subscription:latest
 
 
