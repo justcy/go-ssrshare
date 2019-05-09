@@ -6,13 +6,23 @@
 
 使用：
 
-ssr客户端配置 subscribe feed 填写 本项目地址，例如： http://ssr.kanter.cn/dxxzst即可使用
+ssr客户端配置 subscribe feed 填写 本项目地址，例如： http://ssr.kanter.cn/dxxzst 即可使用
 
 若觉得本项目对您有所帮助，欢迎start
 
-|--|--|
 |源地址|生成subscribe地址|
+|:-----:|-----:|:----:|:----:|:----:|:----:|
 |https://github.com/dxxzst/Free-SS-SSR|http://ssr.kanter.cn/dxxzst|
+
+## Docker
+如果你喜欢docker，我们也提供了docker镜像
+```aidl
+# docker push justcy/ssr-subscription:latest
+# docker run -d -p 8922:8922 --net bridge justcy/ssr-subscription:latest
+
+
+enjoy yourself!!
+```
 
 ## 感谢
 dxxzst@gmail.com
