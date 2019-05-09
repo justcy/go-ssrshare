@@ -6,11 +6,11 @@ import (
 	"io/ioutil"
 	"net/http"
 	"regexp"
+	"sort"
 	"strings"
 )
 
 func main() {
-
 	http.HandleFunc("/", ssr)
 	http.HandleFunc("/dxxzst", dxxzst)
 
@@ -24,18 +24,36 @@ func main() {
 }
 
 func ssr(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "欢迎使用免费ssr订阅服务1")
+	ssrshare,_ := ssrshare("https://raw.githubusercontent.com/ImLaoD/sub/master/ssrshare.com")
+	fmt.Fprintf(w, strings.Join(ssrshare, "\n"))
 }
 
 func dxxzst(w http.ResponseWriter, r *http.Request) {
-	str, err := httpGet("https://github.com/dxxzst/Free-SS-SSR")
+	dxxzst_url := "https://github.com/dxxzst/Free-SS-SSR"
+	ssrshare_url := "https://raw.githubusercontent.com/ImLaoD/sub/master/ssrshare.com"
+	liesauer_url := "https://www.liesauer.net/yogurt/subscribe?ACCESS_TOKEN=DAYxR3mMaZAsaqUb"
+
+	str, err := httpGet(dxxzst_url)
 	if err != nil {
 		fmt.Sprint(w, err)
 	}
 	reg, err := httpRegex(str)
-	result := strings.Join(reg, "\n")
+
+	ssrshareStr,_ := ssrshare(ssrshare_url)
+	liesauerStr,_ := ssrshare(liesauer_url)
+	reg = append(append(reg, ssrshareStr...), liesauerStr...)
+	sort.Strings(reg)
+	result := strings.Join(RemoveDuplicatesAndEmpty(reg), "\n")
 	strbytes := []byte(result)
 	fmt.Fprintf(w, base64.StdEncoding.EncodeToString(strbytes))
+}
+func ssrshare(url string) (resultstr []string,err error){
+	str, err := httpGet(url)
+	if err != nil {
+		return resultstr, err
+	}
+	decodeBytes, err := base64.StdEncoding.DecodeString(str)
+	return strings.Split(string(decodeBytes),"\n"),err
 }
 
 func httpGet(url string) (str string, err error) {
@@ -72,3 +90,30 @@ func httpRegex(str string) (results []string, err error) {
 	}
 	return results, err
 }
+func RemoveRepeatedElement(arr []string) (newArr []string) {
+	newArr = make([]string, 0)
+	for i := 0; i < len(arr); i++ {
+		repeat := false
+		for j := i + 1; j < len(arr); j++ {
+			if arr[i] == arr[j] {
+				repeat = true
+				break
+			}
+		}
+		if !repeat {
+			newArr = append(newArr, arr[i])
+		}
+	}
+	return
+}
+func RemoveDuplicatesAndEmpty(a []string) (ret []string){
+	a_len := len(a)
+	for i:=0; i < a_len; i++{
+		if (i > 0 && a[i-1] == a[i]) || len(a[i])==0{
+			continue;
+		}
+		ret = append(ret, a[i])
+	}
+	return
+}
+
